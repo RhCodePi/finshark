@@ -26,9 +26,11 @@ builder.Services.AddSwaggerGen(options =>
   });
   options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
     In = ParameterLocation.Header, 
-    Description = "Please insert JWT with Bearer into field",
+    Description = "Please enter a valid token",
     Name = "Authorization",
-    Type = SecuritySchemeType.ApiKey 
+    Type = SecuritySchemeType.Http,
+    BearerFormat = "JWT",
+    Scheme = "Bearer" 
   });
   options.AddSecurityRequirement(new OpenApiSecurityRequirement {
    { 
@@ -87,6 +89,7 @@ builder.Services.AddAuthentication(options => {
 
 builder.Services.AddScoped<IStockRepository, StockRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
